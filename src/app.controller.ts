@@ -11,4 +11,10 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+
+  @Public()
+  @Get('redis-test')
+  async testRedis() {
+    return this.appService.testRedis();
+  }
 }
