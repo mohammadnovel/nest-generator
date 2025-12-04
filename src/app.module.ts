@@ -26,10 +26,10 @@ import { BlogsModule } from './modules/blogs/blogs.module';
 import { CategoriesModule } from './modules/categories/categories.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({
+  imports: [
+    ConfigModule.forRoot({
       isGlobal: true,
-      load: [databaseConfig, redisConfig, jwtConfig, appConfig,
-    ProductsModule,],
+      load: [databaseConfig, redisConfig, jwtConfig, appConfig],
     }),
     TypeOrmModule.forRootAsync({
       useFactory: () => databaseConfig(),
@@ -60,6 +60,7 @@ import { CategoriesModule } from './modules/categories/categories.module';
     MenusModule,
     BlogsModule,
     CategoriesModule,
+    ProductsModule,
   ],
   controllers: [AppController],
   providers: [
