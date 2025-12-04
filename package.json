@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@faker-js/faker": "^10.1.0",
+    "@nestjs/cache-manager": "^3.0.1",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.0.1",
@@ -50,7 +51,7 @@
     "passport-local": "^1.0.0",
     "pdfmake": "^0.2.20",
     "pg": "^8.16.3",
-    "redis": "^5.10.0",
+    "redis": "^3.1.2",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "swagger-ui-express": "^5.0.1",

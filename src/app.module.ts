@@ -1,10 +1,13 @@
 
+import { ProductsModule } from './modules/products/products.module';
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { CacheModule } from '@nestjs/cache-manager';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './modules/auth/guards/jwt-auth.guard';
+import * as redisStore from 'cache-manager-redis-store';
 
 import databaseConfig from './config/database.config';
 import redisConfig from './config/redis.config';
@@ -23,13 +26,25 @@ import { BlogsModule } from './modules/blogs/blogs.module';
 import { CategoriesModule } from './modules/categories/categories.module';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({
+  imports: [ConfigModule.forRoot({
       isGlobal: true,
-      load: [databaseConfig, redisConfig, jwtConfig, appConfig],
+      load: [databaseConfig, redisConfig, jwtConfig, appConfig,
+    ProductsModule,],
     }),
     TypeOrmModule.forRootAsync({
       useFactory: () => databaseConfig(),
+    }),
+    CacheModule.registerAsync({
+      isGlobal: true,
+      useFactory: async (configService: ConfigService) => ({
+        store: redisStore as any,
+        host: configService.get('redis.host'),
+        port: configService.get('redis.port'),
+        password: configService.get('redis.password'),
+        db: configService.get('redis.db'),
+        ttl: configService.get('redis.ttl'),
+      }),
+      inject: [ConfigService],
     }),
     ThrottlerModule.forRoot([
       {
