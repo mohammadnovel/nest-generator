@@ -53,7 +53,7 @@ export function generateService(options: GeneratorOptions): string {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { Cache } from 'cache-manager';
+import type { Cache } from 'cache-manager';
 import { ${className} } from './entities/${name}.entity';
 import { Create${className}Dto } from './dto/create-${name}.dto';
 import { Update${className}Dto } from './dto/update-${name}.dto';
